@@ -25,7 +25,7 @@ Tài khoản đầu tiên: `ouhelptobehelpedclub@ou.edu.vn`. Mật khẩu đư�
 Tạo admin tiếp theo:
 
 ```powershell
-node scripts/create-admin.cjs your@email.com
+node scripts/admin/create-admin.cjs your@email.com
 ```
 
 Script yêu cầu nhập mật khẩu không hiển thị. Nó tạo tài khoản Auth rồi thêm ID vào `admin_users`. Nếu đã có tài khoản Auth, cấp quyền bằng SQL Editor:
@@ -98,7 +98,7 @@ Trang `/posts/<slug>` render văn bản bằng React và chỉ nhận block hợ
 
 ### Ảnh
 
-- `POST /api/admin/upload`: multipart `file`, `alt?`; JPEG, PNG, WebP; tối đa 10 MB. Kiểm tra MIME và chữ ký tệp; giới hạn cả request stream. Tên/path do server cấp bằng UUID, không dùng folder/path của client; không overwrite, không fallback sang file cục bộ.
+- `POST /api/admin/upload`: giao diện gửi JSON để khởi tạo phiếu upload, tải JPEG/PNG/WebP trực tiếp vào bucket private `cms-uploads`, rồi gửi phiếu để xử lý. Ảnh bài viết tối đa 50 MB, chuyển WebP giữ kích thước và tạo thumbnail; ảnh thẻ/poster tối đa 10 MB, giữ bytes gốc. Phiếu ký gắn với admin, hết hạn sau 15 phút; kiểm tra MIME, chữ ký tệp và dung lượng thực. Tên/path do server cấp bằng UUID. Multipart còn được hỗ trợ cho local/client cũ; không dùng đường này cho ảnh lớn trên Vercel. Xem [kiến trúc upload](ARCHITECTURE.md).
 - `GET /api/admin/assets`: thư viện ảnh có phân trang.
 - `PATCH /api/admin/assets?id=<uuid>`: `{alt}`.
 - `DELETE /api/admin/assets?id=<uuid>`: trả 409 và các vị trí tham chiếu nếu ảnh đang được dùng. FK bảo vệ trường hợp có liên kết mới giữa lúc kiểm tra/xóa.
@@ -131,7 +131,7 @@ npm run check:backend
 
 Hai script integration cần public credentials và server secret để tạo/dọn dữ liệu kiểm thử có marker/ID riêng. CMS test tạo tài khoản test riêng, kiểm tra đăng nhập, thiếu quyền, CSRF, validation, nháp/đăng/gỡ đăng, slug ổn định, album/rollback, ảnh dùng chung, cấu hình trang, đổi tên ban, nhiều vai trò và thu hồi admin. Các cấu hình bị sửa tạm được khôi phục trong finally. Message test kiểm tra realtime bằng client thứ hai, gửi đồng thời, 72 lời nhắn vượt sức chứa tán, phân trang và quyền DB; dọn các lời nhắn theo ID lẫn marker.
 
-Kiểm thử đã chạy thành công trên project được cấu hình. Không có dữ liệu kiểm thử được giữ lại. Deploy frontend/Next.js lên hosting chưa được thực hiện; migration DB và dữ liệu khởi tạo đã được áp dụng.
+Kiểm thử đã chạy thành công trên project được cấu hình. Không có dữ liệu kiểm thử được giữ lại. Next.js đã publish lên [Vercel](https://vang-trang-hoa-sac-2.vercel.app) ngày 05/10/2026; migration DB và dữ liệu khởi tạo đã được áp dụng. Xem [hướng dẫn vận hành](DEPLOYMENT.md).
 
 ## Ghi chú kiểm tra Supabase
 

@@ -1,0 +1,11 @@
+.git
+.agents
+.hallmark
+.next
+node_modules
+.env
+.env.*
+.admin-credentials.local.txt
+*.tsbuildinfo
+docs
+scripts

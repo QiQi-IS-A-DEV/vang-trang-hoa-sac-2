@@ -2,14 +2,23 @@
   "name": "vang-trang-hoa-sac-2",
   "version": "0.1.0",
   "private": true,
+  "engines": { "node": "22.x" },
   "scripts": {
     "dev": "next dev",
+    "dev:clean": "node scripts/dev/clean-cache.cjs",
     "build": "next build",
     "start": "next start",
     "lint": "eslint",
-    "check:backend": "node scripts/check-backend.cjs",
-    "check:cms": "node scripts/check-cms.cjs",
-    "import:cms": "node scripts/import-cms.cjs"
+    "check:backend": "node scripts/checks/check-backend.cjs",
+    "check:cms": "node scripts/checks/check-cms.cjs",
+    "check:website": "node scripts/checks/check-website.cjs",
+    "check:deletion": "node scripts/checks/check-deletion.cjs",
+    "check:uploads": "node scripts/checks/check-uploads.cjs",
+    "typecheck": "tsc --noEmit",
+    "check:deploy": "node scripts/checks/check-deploy.cjs",
+    "verify": "npm run check:deploy && npm run lint && npm run build",
+    "admin:create": "node scripts/admin/create-admin.cjs",
+    "import:cms": "node scripts/admin/import-cms.cjs"
   },
   "dependencies": {
     "@supabase/supabase-js": "^2.117.2",
