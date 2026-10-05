@@ -3,6 +3,7 @@
 import { useEffect, useRef, useState } from 'react';
 import { OriginalImage } from './original-image';
 import type { TeamPoster } from '@/shared/data/team-posters';
+import { FestivalIcon } from '../ui/festival-icon';
 
 const sectionHashes: Record<string, TeamPoster['section']> = {
   '#advisors': 'advisors', '#organizers': 'organizers', '#department-leads': 'departments',
@@ -39,13 +40,15 @@ export function TeamSlideshow({ slides }: { slides: TeamPoster[] }) {
       <div
         className="team-slideshow-stage group/poster"
         onTouchStart={event => {
+          if (event.touches.length !== 1) { touchStart.current = null; return; }
           const touch = event.touches[0]; touchStart.current = { x: touch.clientX, y: touch.clientY };
         }}
+        onTouchCancel={() => { touchStart.current = null; swiped.current = false; }}
         onTouchEnd={event => {
           const start = touchStart.current, touch = event.changedTouches[0]; touchStart.current = null;
           if (!start || !touch) return;
           const dx = touch.clientX - start.x, dy = touch.clientY - start.y;
-          if (Math.abs(dx) > 60 && Math.abs(dx) > Math.abs(dy) * 1.5) {
+          if (Math.abs(dx) > 45 && Math.abs(dx) > Math.abs(dy) * 1.5) {
             swiped.current = true; step(dx < 0 ? 1 : -1);
             setTimeout(() => { swiped.current = false; }, 350);
           }
@@ -107,6 +110,8 @@ export function TeamSlideshow({ slides }: { slides: TeamPoster[] }) {
           </button>
         </div>
       </div>
+      <div className="team-slide-caption"><span aria-live="polite">{current.title} <small>{index + 1} / {slides.length}</small></span><p className="touch-hint"><FestivalIcon name="lantern" /> {slides.length > 1 ? 'Vuốt để đổi ảnh · chạm để phóng to' : 'Chạm vào ảnh để phóng to'}</p></div>
+      {slides.length > 1 && <nav className="team-slide-picker" aria-label="Chọn poster đội ngũ">{slides.map((slide, i) => <button key={slide.src} type="button" aria-label={`Xem ${slide.title}`} aria-pressed={i === index} onClick={() => setIndex(i)}><span /></button>)}</nav>}
     </div>
   </section>;
 }

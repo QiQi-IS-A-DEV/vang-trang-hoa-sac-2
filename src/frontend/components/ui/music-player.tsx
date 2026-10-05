@@ -1,82 +1,73 @@
 "use client";
 
-import { useEffect, useRef, useState } from "react";
-import { usePathname } from "next/navigation";
+import { useEffect, useRef, useState } from 'react';
+import { usePathname } from 'next/navigation';
+import { createFestivalChimes, soundtrackUrl } from '@/frontend/lib/festival-sound';
+import { FestivalIcon } from './festival-icon';
 
 export function MusicPlayer() {
   const pathname = usePathname();
-  const [isPlaying, setIsPlaying] = useState(false);
-  const [hasInteracted, setHasInteracted] = useState(false);
-  const audioRef = useRef<HTMLAudioElement | null>(null);
-
   const isAdmin = pathname?.startsWith('/admin');
-
-  // Nhạc nền hòa tấu không lời Trung thu êm dịu (royalty-free instrumental)
-  const audioSrc = "https://cdn.pixabay.com/download/audio/2022/05/16/audio_c848529244.mp3?filename=traditional-asian-melody-111762.mp3";
+  const [playing, setPlaying] = useState(false);
+  const [busy, setBusy] = useState(false);
+  const [error, setError] = useState('');
+  const sound = useRef<ReturnType<typeof createFestivalChimes> | null>(null);
+  const audio = useRef<HTMLAudioElement | null>(null);
+  const operation = useRef(0);
 
   useEffect(() => {
-    const audio = new Audio(audioSrc);
-    audio.loop = true;
-    audio.volume = 0.35; // Âm lượng nhẹ nhàng êm tai
-    audioRef.current = audio;
+    // Both start only after an explicit tap. Hide/pause sound inside the admin.
+    function pause() {
+      operation.current++;
+      if (sound.current) void sound.current.pause();
+      audio.current?.pause();
+      setPlaying(false); setBusy(false);
+    }
+    function visibility() { if (document.hidden) pause(); }
+    if (isAdmin) pause();
+    document.addEventListener('visibilitychange', visibility);
+    return () => document.removeEventListener('visibilitychange', visibility);
+  }, [isAdmin]);
 
-    return () => {
-      audio.pause();
-      audioRef.current = null;
-    };
+  useEffect(() => () => {
+    operation.current++;
+    sound.current?.dispose(); audio.current?.pause();
+    sound.current = null; audio.current = null;
   }, []);
 
-  function togglePlay() {
-    if (!audioRef.current) return;
-    setHasInteracted(true);
-    if (isPlaying) {
-      audioRef.current.pause();
-      setIsPlaying(false);
-    } else {
-      audioRef.current.play().then(() => {
-        setIsPlaying(true);
-      }).catch((e) => {
-        console.warn("Không thể phát nhạc tự động:", e);
-      });
-    }
+  async function toggle() {
+    if (busy) return;
+    const attempt = ++operation.current;
+    setBusy(true); setError('');
+    try {
+      if (playing) {
+        if (sound.current) await sound.current.pause();
+        audio.current?.pause();
+        setPlaying(false);
+      } else {
+        if (soundtrackUrl) {
+          if (!audio.current) { audio.current = new Audio(soundtrackUrl); audio.current.loop = true; audio.current.volume = .25; }
+          await audio.current.play();
+        } else {
+          sound.current ??= createFestivalChimes();
+          await sound.current.play();
+        }
+        if (attempt === operation.current) setPlaying(true);
+        else { if (sound.current) await sound.current.pause(); audio.current?.pause(); }
+      }
+    } catch {
+      setPlaying(false);
+      setError('Chưa bật được tiếng. Chạm để thử lại.');
+    } finally { if (attempt === operation.current) setBusy(false); }
   }
 
   if (isAdmin) return null;
-
-  return (
-    <div className="music-control fixed bottom-6 right-6 z-40">
-      <button
-        onClick={togglePlay}
-        aria-label={isPlaying ? "Tắt nhạc nền" : "Bật nhạc nền Trung Thu"}
-        title={isPlaying ? "Tắt nhạc nền" : "Bật nhạc nền Trung Thu êm dịu"}
-        className={`group flex items-center gap-2.5 rounded-full border px-4 py-2.5 shadow-2xl backdrop-blur-md transition-all duration-300 hover:scale-105 ${
-          isPlaying
-            ? "border-amber-300 bg-gradient-to-r from-amber-500/90 to-yellow-400/90 text-purple-950 font-bold shadow-amber-500/20"
-            : "border-white/20 bg-purple-950/80 text-purple-200 hover:border-amber-300/60 hover:text-white"
-        }`}
-      >
-        {/* Equalizer animation khi phát nhạc */}
-        {isPlaying ? (
-          <div className="flex items-end gap-0.5 h-4 w-4">
-            <span className="w-1 bg-purple-950 rounded-full animate-[bounce_1s_infinite_100ms] h-full" />
-            <span className="w-1 bg-purple-950 rounded-full animate-[bounce_1s_infinite_300ms] h-3" />
-            <span className="w-1 bg-purple-950 rounded-full animate-[bounce_1s_infinite_200ms] h-4" />
-          </div>
-        ) : (
-          <span className="text-base group-hover:rotate-12 transition-transform">🏮</span>
-        )}
-
-        <span className="music-label text-xs tracking-wide">
-          {isPlaying ? "Giai điệu mùa trăng" : "Bật nhạc Trung Thu"}
-        </span>
-
-        {!hasInteracted && !isPlaying && (
-          <span className="relative flex h-2 w-2">
-            <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-amber-400 opacity-75" />
-            <span className="relative inline-flex rounded-full h-2 w-2 bg-amber-500" />
-          </span>
-        )}
-      </button>
-    </div>
-  );
+  return <div className="music-control">
+    {error && <p className="sound-error" role="alert">{error}</p>}
+    <button type="button" onClick={toggle} aria-pressed={playing} aria-busy={busy} disabled={busy} className="sound-toggle" title={soundtrackUrl ? 'Nhạc nền chương trình' : 'Giai điệu chuông mùa trăng'}>
+      <FestivalIcon name={playing ? 'sound' : 'mute'} />
+      <span className="music-label">{busy ? 'Đang bật…' : playing ? 'Tắt tiếng' : 'Bật tiếng'}</span>
+      {playing && <span className="sound-playing" aria-hidden="true"><i/><i/><i/></span>}
+    </button>
+  </div>;
 }

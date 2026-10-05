@@ -3,6 +3,7 @@
 import { useEffect, useState } from "react";
 import Link from "next/link";
 import Image from "next/image";
+import { FestivalIcon } from '../ui/festival-icon';
 
 type Post = {
   id: string;
@@ -56,7 +57,7 @@ export function PostGallery() {
   return (
     <div className="space-y-6">
       {/* Category filter pills */}
-      <nav className="flex flex-wrap items-center gap-2" aria-label="Danh mục tin tức">
+      <nav className="post-category-options flex flex-wrap items-center gap-2" aria-label="Danh mục tin tức">
         {[{ id: "", name: "Tất cả" }, ...categories].map((c) => (
           <button
             key={c.id} disabled={more} aria-pressed={category === c.id}
@@ -98,22 +99,23 @@ export function PostGallery() {
           Đang tải những câu chuyện mùa trăng…
         </div>
       ) : (
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+        <div className="post-card-grid">
           {items.map((p) => (
             <Link
               href={`/posts/${p.slug}`}
               key={p.id}
-              className="group relative rounded-3xl border border-amber-300/20 hover:border-amber-300/70 bg-[#290c40]/70 p-4 transition-all duration-300 hover:-translate-y-1.5 shadow-xl hover:shadow-2xl hover:shadow-purple-950/80 flex flex-col justify-between overflow-hidden "
+              className="post-story-card group"
             >
               {p.cover && (
-                <div className="relative aspect-[16/10] w-full rounded-2xl overflow-hidden bg-black/40 mb-3 border border-white/5">
+                <div className="post-cover">
                   <Image
                     src={p.cover.thumbnail_url || p.cover.url}
                     alt={p.cover.alt || p.title}
-                    fill
+                    width={1920}
+                    height={1280}
                     unoptimized
                     sizes="(max-width:768px) 100vw, 33vw"
-                    className="object-contain"
+                    className="post-cover-image"
                   />
                 </div>
               )}
@@ -129,9 +131,9 @@ export function PostGallery() {
                   )}
                 </div>
                 <div className="mt-4 pt-3 border-t border-white/5 flex items-center justify-between">
-                  <span className="text-sm font-bold text-amber-300 group-hover:underline inline-flex items-center gap-1">
+                  <span className="post-read-link text-sm font-bold text-amber-300 inline-flex items-center gap-2">
                     <span>Đọc bài viết</span>
-                    <span>↗</span>
+                    <FestivalIcon name="lantern" />
                   </span>
                 </div>
               </div>
@@ -139,6 +141,8 @@ export function PostGallery() {
           ))}
         </div>
       )}
+
+      {!loading && items.length > 1 && <p className="touch-hint post-swipe-hint"><FestivalIcon name="star" /> Vuốt ngang để xem thêm câu chuyện</p>}
 
       {!loading && !items.length && !error && (
         <p className="py-12 text-center text-sm text-purple-200">

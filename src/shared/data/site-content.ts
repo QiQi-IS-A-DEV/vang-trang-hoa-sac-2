@@ -35,7 +35,7 @@ export const defaultSiteContent: SiteContentSettings = {
   statScholarships: "20+",
   statVolunteers: "60+",
   statLanterns: "500+",
-  footerQuote: "Cho đi là còn mãi — Nụ cười trẻ thơ là món quà vô giá.",
+  footerQuote: "Một mùa trăng,\nmuôn điều thương ở lại.",
 
   // Trang Kỷ Niệm
   memoriesSubtitle: "Một mùa trăng · Ngàn điều muốn nói",

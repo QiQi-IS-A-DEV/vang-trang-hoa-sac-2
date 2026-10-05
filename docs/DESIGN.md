@@ -8,3 +8,7 @@ Khu vực BTC, cố vấn và các ban là một slideshow ảnh toàn khung, đ
 Giữ file gốc, không re-encode. Thẻ và ảnh nhân sự dùng unoptimized, object-contain, không phủ màu. Xem, phóng và tải URL gốc. Không lấy ảnh người khác làm fallback. CMS là nguồn chính, không phục hồi mẫu khi danh sách rỗng.
 ## Phạm vi
 Chỉnh tại chỗ trang chủ, quản trị, bài viết, component. Thêm danh sách tin và trình xem ảnh. Giữ backend và cây kỷ niệm. Không xóa file sản xuất.
+
+## Tương tác điện thoại và âm thanh
+Các CTA công khai dùng icon nét lồng đèn, trăng, thỏ và ngôi sao cùng màu thương hiệu; chỉ giữ dấu điều hướng khi nó biểu thị chức năng thật (trước/sau poster, tăng/giảm zoom). Mobile có nút tối thiểu 44px, bộ lọc ban bằng select, tin tức vuốt ngang và phản hồi khi chạm. Poster vẫn hỗ trợ vuốt; thêm chỉ số, nút chọn slide và hướng dẫn. Ảnh tin tức giữ tỷ lệ tự nhiên, không chèn viền đen.
+Nút âm thanh ghi Bật tiếng / Tắt tiếng, chỉ phát sau thao tác người dùng và dừng khi vào admin hoặc ẩn tab. Mặc định phát giai điệu chuông nguyên bản tạo tại máy, không phụ thuộc link MP3 bên ngoài. Khi CLB chọn bản ghi MP3, đưa vào public/audio/trung-thu.mp3 rồi cập nhật soundtrackUrl trong src/frontend/lib/festival-sound.ts. Không tự lấy nhạc có bản quyền từ nguồn khác.

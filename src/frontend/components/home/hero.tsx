@@ -4,6 +4,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { useSiteSettings } from "@/frontend/lib/hooks/use-site-settings";
 import { useLandingSection } from "./landing-section";
+import { FestivalIcon } from '../ui/festival-icon';
 
 export function Hero() {
   const settings = useSiteSettings();
@@ -83,7 +84,7 @@ export function Hero() {
             href="/memories"
             className="festival-header-link"
           >
-            Cây kỷ niệm ↗
+            <FestivalIcon name="lantern" /> Cây kỷ niệm
           </Link>
         </nav>
       </header>
@@ -104,8 +105,8 @@ export function Hero() {
             if (rawTitle.toUpperCase().trim() === "VẦNG TRĂNG HÒA SẮC 2") {
               return (
                 <span className="inline-block md:whitespace-nowrap">
-                  <span className="inline-block">VẦNG TRĂNG HÒA SẮC</span>
-                  <span className="inline-block">&nbsp;2</span>
+                  <span className="festival-title-first">VẦNG TRĂNG</span>{' '}
+                  <span className="festival-title-second">HÒA SẮC 2</span>
                 </span>
               );
             }
@@ -119,20 +120,20 @@ export function Hero() {
         </p>
 
         {/* Call to action buttons */}
-        <div className="mt-8 flex flex-wrap items-center justify-center gap-3 sm:gap-4">
+        <div className="hero-festival-actions mt-8 flex flex-wrap items-center justify-center gap-3 sm:gap-4">
           <Link
             href="/memories"
             className="festival-button rounded-full px-7 sm:px-9 py-3 text-xs sm:text-sm font-black text-purple-950 shadow-xl shadow-amber-500/20 hover:scale-105 active:scale-95 transition-all flex items-center gap-2 cursor-pointer"
           >
             <span>{settings.primaryButton || "Đến cây kỷ niệm"}</span>
-            <span>↗</span>
+            <FestivalIcon name="lantern" />
           </Link>
           <a
-            href="#advisors"
+            href="#recap"
             className="rounded-full border border-amber-300/60 bg-[#250d3d]/70 hover:bg-[#341154] px-6 sm:px-8 py-3 text-xs sm:text-sm font-bold text-amber-200 shadow-lg backdrop-blur-sm hover:border-amber-300 transition-all flex items-center gap-2 cursor-pointer"
           >
             <span>{settings.secondaryButton || "Xem dấu ấn chương trình"}</span>
-            <span>↓</span>
+            <FestivalIcon name="moon" />
           </a>
         </div>
       </div>
@@ -144,7 +145,7 @@ export function Hero() {
           className="inline-flex items-center gap-2 rounded-full bg-purple-950/50 hover:bg-purple-900/70 border border-purple-400/20 px-4 py-1.5 text-xs font-semibold text-purple-200 hover:text-amber-200 backdrop-blur-sm transition-all"
         >
           <span>Khám phá mùa trăng</span>
-          <span className="animate-bounce">↓</span>
+          <FestivalIcon name="rabbit" />
         </a>
       </div>
     </section>
