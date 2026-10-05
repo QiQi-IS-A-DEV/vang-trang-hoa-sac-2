@@ -21,3 +21,5 @@ Nút âm thanh ghi Bật tiếng / Tắt tiếng, chỉ phát sau thao tác ngư
 - Thay nhạc tại `/admin/website/brand` → Nhạc nền → tải một MP3 → Lưu thay đổi. Chỉ một bài được chọn, giữ nguyên chất lượng, phát lặp khi khách chạm “Bật tiếng”.
 - Tệp MP3 upload trực tiếp qua bucket staging riêng tư, kiểm tra MPEG frames và lưu ở `gallery/music/`. Cấu hình bài được chọn nằm trong `site_settings.content.musicTrack`, không cần thay schema của thư viện ảnh. Các bản upload trước vẫn lưu trong Storage, giúp giữ an toàn khi đang đổi bài.
 - Chạy `node scripts/admin/enable-music.cjs` khi cấu hình Supabase mới để thêm MIME `audio/mpeg` vào hai bucket, giữ nguyên quyền truy cập và giới hạn dung lượng.
+
+Nhạc nền hiển thị tên tệp ngay khi bắt đầu upload, trạng thái chưa lưu/đã lưu cạnh bài đã chọn, và lỗi tại ô upload. Sau khi lưu, admin đọc lại cấu hình từ server để xác nhận. MP3 có nhiều khối ID3 được hỗ trợ. Các nút “Xem trang web” mở tab mới, giữ màn quản trị.

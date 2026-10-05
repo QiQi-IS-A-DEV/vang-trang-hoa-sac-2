@@ -41,7 +41,11 @@ async function main(){
  console.log('PASS: authentication, origin checks, upload limits, signed tickets and missing uploads.');
  assert.equal((await request({...metadata,filename:'track.mp3',mime:'audio/mpeg',purpose:'original'})).status,415);
  assert.equal((await request({...metadata,purpose:'audio'})).status,415);
- const mp3=Buffer.alloc(417*12);for(let i=0;i<12;i++)mp3.set([255,251,144,100],i*417);
+ const frames=Buffer.alloc(417*12);for(let i=0;i<12;i++)frames.set([255,251,144,100],i*417);
+ // Regression: valid MP3 with consecutive ID3 tags, including a v2.4 footer.
+ const id3=Buffer.from([73,68,51,4,0,0,0,0,0,0]);
+ const id3Footer=Buffer.from([73,68,51,4,0,16,0,0,0,0,51,68,73,4,0,16,0,0,0,0]);
+ const mp3=process.env.TEST_AUDIO_FILE?require('node:fs').readFileSync(process.env.TEST_AUDIO_FILE):Buffer.concat([id3,id3Footer,frames]);
  const music=await request({action:'initialize',filename:'isolated-silent-check.mp3',mime:'audio/mpeg',purpose:'audio',size:mp3.length});assert.equal(music.status,200,JSON.stringify(music.data));temporary.push(music.data.path);
  assert.ifError((await browser.storage.from(music.data.bucket).uploadToSignedUrl(music.data.path,music.data.token,mp3,{contentType:'audio/mpeg'})).error);
  const musicCompleted=await request({action:'complete',ticket:music.data.ticket});assert.equal(musicCompleted.status,201,JSON.stringify(musicCompleted.data));

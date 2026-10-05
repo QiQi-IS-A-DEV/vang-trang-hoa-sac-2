@@ -7,9 +7,13 @@ import { compressPostImage } from './post-image';
 export async function saveUploadedAudio(file:File){
     const bytes=Buffer.from(await file.arrayBuffer());
     let offset=0;
-    if(bytes.toString('ascii',0,3)==='ID3'){
-      if(bytes.length<10||bytes.subarray(6,10).some(value=>value>127))throw new ApiError(415,'Tệp MP3 không đọc được.');
-      offset=10+((bytes[6]<<21)|(bytes[7]<<14)|(bytes[8]<<7)|bytes[9])+((bytes[5]&16)?10:0);
+    // Editors can prepend multiple ID3 tags; skip every complete tag before audio.
+    while(bytes.toString('ascii',offset,offset+3)==='ID3'){
+      if(offset+10>bytes.length||![2,3,4].includes(bytes[offset+3])||bytes.subarray(offset+6,offset+10).some(value=>value>127))throw new ApiError(415,'Metadata của tệp MP3 không đọc được.');
+      const size=(bytes[offset+6]<<21)|(bytes[offset+7]<<14)|(bytes[offset+8]<<7)|bytes[offset+9];
+      const footer=bytes[offset+3]===4&&(bytes[offset+5]&16)?10:0;
+      offset+=10+size+footer;
+      if(offset>bytes.length)throw new ApiError(415,'Metadata của tệp MP3 chưa đầy đủ.');
     }
     // Verify actual MPEG Layer III frames, including the next frame boundary.
     function frameLength(at:number){
