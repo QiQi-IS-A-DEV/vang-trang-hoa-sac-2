@@ -40,6 +40,7 @@ export function TeamSlideshow({ slides }: { slides: TeamPoster[] }) {
       <div
         className="team-slideshow-stage group/poster"
         onTouchStart={event => {
+          if (event.target instanceof Element && event.target.closest('dialog')) { touchStart.current = null; return; }
           if (event.touches.length !== 1) { touchStart.current = null; return; }
           const touch = event.touches[0]; touchStart.current = { x: touch.clientX, y: touch.clientY };
         }}
