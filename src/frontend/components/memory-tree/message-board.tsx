@@ -158,7 +158,7 @@ export function MessageBoard({ allowSubmissions = true }: MessageBoardProps) {
             <p className="text-2xl mb-2">🏮</p>
             <h3 className="font-bold text-base text-amber-200">Cổng gửi lời nhắn hiện đang tạm đóng</h3>
             <p className="mt-2 text-xs leading-relaxed text-purple-200/90">
-              Ban Tổ Chức đã tạm khép lại hòm thư mùa trăng để lưu giữ trọn vẹn những kỷ niệm đẹp. Mời bạn ngắm nhìn Cây Kỷ Niệm và đọc lại những điều thương mến bên cạnh nhé!
+              Ban Tổ Chức đã tạm khép lại hòm thư mùa trăng để lưu giữ trọn vẹn những kỷ niệm đẹp. Mời bạn ngắm nhìn Cây Kỷ Niệm và chạm vào từng kỷ niệm trên cây để đọc lời nhắn nhé!
             </p>
           </div>
         ) : (
@@ -175,7 +175,7 @@ export function MessageBoard({ allowSubmissions = true }: MessageBoardProps) {
           </>
         )}
       </form>
-      <section aria-labelledby="messages-heading" className="rounded-3xl border border-pink-200/30 bg-purple-950/65 backdrop-blur-md p-6 md:p-8">
+      <section aria-labelledby="messages-heading" className="memory-message-list rounded-3xl border border-pink-200/30 bg-purple-950/65 backdrop-blur-md p-6 md:p-8">
         <h2 id="messages-heading" className="text-2xl font-semibold text-amber-100">Lời nhắn của chúng ta</h2>
         {configured && <p className="mt-2 text-sm text-purple-200" role="status">{loadError ? "Chưa kết nối được dữ liệu lời nhắn" : connected ? "Đang nhận lời nhắn mới" : "Đang kết nối · tự tải lại định kỳ"}</p>}
         {loadError && <p role="alert" className="mt-4 text-amber-200">{loadError} <button onClick={() => window.location.reload()} className="underline">Tải lại</button></p>}

@@ -12,10 +12,12 @@ async function requestUpload(payload:unknown){
 export async function adminFetch(url:string,init?:RequestInit):Promise<Response>{
   if(!url.startsWith('/api/admin/upload')||!(init?.body instanceof FormData))return fetch(url,init);
   const file=init.body.get('file');if(!(file instanceof File)||!file.size)throw new Error('Chọn một ảnh hợp lệ.');
-  const purpose=url.includes('purpose=post')?'post':'original';
-  if(file.size>(purpose==='post'?50:10)*1024*1024)throw new Error(purpose==='post'?'Ảnh tối đa 50 MB trên cấu hình Supabase dùng thử.':'Ảnh gốc tối đa 10 MB.');
-  const upload=await requestUpload({action:'initialize',filename:file.name.slice(0,200),mime:file.type,size:file.size,purpose,alt:String(init.body.get('alt')??'').slice(0,1000)});
-  const {error}=await createSupabaseBrowserClient().storage.from(upload.bucket).uploadToSignedUrl(upload.path,upload.token,file,{contentType:file.type});
+  const purpose=url.includes('purpose=audio')?'audio':url.includes('purpose=post')?'post':'original';
+  if(purpose==='audio'&&!/\.mp3$/i.test(file.name))throw new Error('Chọn một bài nhạc định dạng MP3.');
+  if(file.size>(purpose==='original'?10:50)*1024*1024)throw new Error(purpose==='audio'?'Nhạc nền tối đa 50 MB.':purpose==='post'?'Ảnh tối đa 50 MB trên cấu hình Supabase dùng thử.':'Ảnh gốc tối đa 10 MB.');
+  const mime=purpose==='audio'?'audio/mpeg':file.type;
+  const upload=await requestUpload({action:'initialize',filename:file.name.slice(0,200),mime,size:file.size,purpose,alt:String(init.body.get('alt')??'').slice(0,1000)});
+  const {error}=await createSupabaseBrowserClient().storage.from(upload.bucket).uploadToSignedUrl(upload.path,upload.token,file,{contentType:mime});
   if(error)throw new Error('Không thể gửi ảnh lên Storage. Kiểm tra kết nối và giới hạn dung lượng Supabase.');
   const result=await requestUpload({action:'complete',ticket:upload.ticket});
   return Response.json(result,{status:201});

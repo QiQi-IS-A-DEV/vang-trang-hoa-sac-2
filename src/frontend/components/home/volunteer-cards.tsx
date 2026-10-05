@@ -4,7 +4,6 @@ import { useTeamData } from "@/frontend/lib/hooks/use-team-data";
 import { useLandingSection } from "./landing-section";
 import { OriginalImage } from "./original-image";
 import { compareProgramCards } from "@/shared/team-card-order";
-import { FestivalIcon } from '../ui/festival-icon';
 
 export function VolunteerCards() {
   const section = useLandingSection();
@@ -62,7 +61,7 @@ export function VolunteerCards() {
           <span className="lower-eyebrow">Những người góp nên mùa trăng</span>
           <h2 className="festival-title">{section?.title || "Thẻ tình nguyện viên"}</h2>
           <p>{section?.description || "Mỗi chiếc thẻ lưu giữ một gương mặt đã cùng góp sức cho mùa trăng."}</p>
-          <p className="touch-hint"><FestivalIcon name="star" /> Chạm vào thẻ để xem rõ hơn</p>
+
         </header>
 
         <div className="volunteer-view-options">
@@ -122,7 +121,6 @@ export function VolunteerCards() {
                       src={card.cardImage!}
                       alt={`Thẻ tình nguyện viên ${card.name}`}
                       className="volunteer-image-only"
-                      label="Phóng to thẻ"
                     />
                   </div>
                 ))}

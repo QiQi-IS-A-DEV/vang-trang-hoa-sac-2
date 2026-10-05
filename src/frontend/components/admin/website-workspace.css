@@ -83,3 +83,6 @@ html:has(.website-workspace),body:has(.website-workspace) { overflow-x: clip; }
 }
 @media(max-width:375px) { .cms-shell .website-posters { grid-template-columns: minmax(0,1fr); } .cms-shell .website-form-panel { padding: 16px; } }
 @media(max-width:350px) { .cms-shell:has(.website-workspace) .admin-breadcrumb > span { display: none; } .cms-shell:has(.website-workspace) .admin-breadcrumb strong { white-space: nowrap; } }
+
+.website-music-preview { display: grid; gap: 16px; margin-block: 20px; overflow-wrap: anywhere; }
+.website-music-preview audio { width: 100%; max-width: 440px; }

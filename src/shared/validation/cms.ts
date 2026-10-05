@@ -34,6 +34,7 @@ export const settingSchema = z.object({
   memoriesGuideTitle: name.optional(), memoriesGuideDescription: text(2000).optional(), memoriesFooterText: text(2000).optional(),
   allowSubmissions: z.literal(true).optional(), primaryButton: text(160).optional(), secondaryButton: text(160).optional(),
   logo_asset_id: uuid.nullable().optional(), background_asset_id: uuid.nullable().optional(),
+  musicTrack: z.object({storage_path:z.string().regex(/^music\/[0-9a-f-]{36}\.mp3$/),filename:text(200).min(1),url:z.url()}).strict().nullable().optional(),
 }).strict();
 export function slugify(title: string) {
   return title.normalize('NFD').replace(/[\u0300-\u036f]/g,'').replace(/[đĐ]/g,'d').toLowerCase().replace(/[^a-z0-9]+/g,'-').replace(/^-|-$/g,'') || 'bai-viet';

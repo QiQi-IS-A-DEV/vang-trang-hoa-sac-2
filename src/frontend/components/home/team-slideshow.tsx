@@ -3,7 +3,6 @@
 import { useEffect, useRef, useState } from 'react';
 import { OriginalImage } from './original-image';
 import type { TeamPoster } from '@/shared/data/team-posters';
-import { FestivalIcon } from '../ui/festival-icon';
 
 const sectionHashes: Record<string, TeamPoster['section']> = {
   '#advisors': 'advisors', '#organizers': 'organizers', '#department-leads': 'departments',
@@ -71,7 +70,7 @@ export function TeamSlideshow({ slides }: { slides: TeamPoster[] }) {
 
           {/* Khung ảnh chính */}
           <div className="team-poster-inner">
-            <OriginalImage key={current.src} src={current.src} alt={current.title} className="team-slideshow-image" label="Phóng to ảnh gốc" />
+            <OriginalImage key={current.src} src={current.src} alt={current.title} className="team-slideshow-image" />
           </div>
 
           {/* Nút mũi tên trái ở rìa ảnh */}
@@ -111,7 +110,7 @@ export function TeamSlideshow({ slides }: { slides: TeamPoster[] }) {
           </button>
         </div>
       </div>
-      <div className="team-slide-caption"><span aria-live="polite">{current.title} <small>{index + 1} / {slides.length}</small></span><p className="touch-hint"><FestivalIcon name="lantern" /> {slides.length > 1 ? 'Vuốt để đổi ảnh · chạm để phóng to' : 'Chạm vào ảnh để phóng to'}</p></div>
+      <div className="team-slide-caption"><span aria-live="polite">{current.title} <small>{index + 1} / {slides.length}</small></span><p className="touch-hint"> {slides.length > 1 ? 'Vuốt để đổi ảnh' : ''}</p></div>
       {slides.length > 1 && <nav className="team-slide-picker" aria-label="Chọn poster đội ngũ">{slides.map((slide, i) => <button key={slide.src} type="button" aria-label={`Xem ${slide.title}`} aria-pressed={i === index} onClick={() => setIndex(i)}><span /></button>)}</nav>}
     </div>
   </section>;

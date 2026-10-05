@@ -668,3 +668,19 @@ html, body { overflow-x: clip; }
   .sound-playing i { animation: none; }
   .post-story-card, .hero-festival-actions > a, .sound-toggle, .team-slide-picker button span { transition: none; }
 }
+
+/* Mobile keeps the posters and the tree as the focus. */
+.festival-brand-name { color: var(--site-accent); }
+.memory-mobile-link { display: none; }
+@media (max-width: 767px) {
+  .team-slide-caption, .team-slide-picker, .memory-message-list, .memory-desktop-link { display: none; }
+  .memory-mobile-link { display: inline-flex; }
+}
+
+.original-image { cursor: default; }
+.original-image img { transition: transform .2s ease, filter .2s ease; }
+@media (hover: hover) and (pointer: fine) {
+  .original-image:hover img { transform: scale(1.015); filter: brightness(1.04); }
+}
+.original-image[data-pressed] img { transform: scale(1.015); filter: brightness(1.04); }
+@media (prefers-reduced-motion: reduce) { .original-image img { transition: none; } }

@@ -3,14 +3,15 @@ import { createHmac, randomUUID, timingSafeEqual } from 'node:crypto';
 import { z } from 'zod';
 import { ApiError } from './http';
 import { storageAdmin } from './storage';
-import { saveUploadedImage } from './upload';
+import { saveUploadedImage, saveUploadedAudio } from './upload';
 
 export const temporaryUploadBucket='cms-uploads';
-const initializeSchema=z.object({action:z.literal('initialize'),filename:z.string().min(1).max(200),mime:z.enum(['image/jpeg','image/png','image/webp']),size:z.number().int().positive().max(50*1024*1024),purpose:z.enum(['post','original']).default('original'),alt:z.string().max(1000).default('')}).strict();
+const initializeSchema=z.object({action:z.literal('initialize'),filename:z.string().min(1).max(200),mime:z.enum(['image/jpeg','image/png','image/webp','audio/mpeg']),size:z.number().int().positive().max(50*1024*1024),purpose:z.enum(['post','original','audio']).default('original'),alt:z.string().max(1000).default('')}).strict();
 const claimSchema=initializeSchema.omit({action:true}).extend({path:z.string(),user:z.uuid(),expires:z.number()});
 function signature(payload:string){const secret=process.env.SUPABASE_SECRET_KEY;if(!secret)throw new ApiError(503,'Chưa cấu hình dịch vụ lưu ảnh.');return createHmac('sha256',secret).update('vths-upload:'+payload).digest('base64url');}
 export async function initializeUpload(input:unknown,user:string){
   const parsed=initializeSchema.parse(input);
+  if((parsed.purpose==='audio')!==(parsed.mime==='audio/mpeg')||(parsed.purpose==='audio'&&!/\.mp3$/i.test(parsed.filename)))throw new ApiError(415,'Nhạc nền cần tệp MP3; các trường ảnh chỉ nhận ảnh.');
   const metadata={filename:parsed.filename,mime:parsed.mime,size:parsed.size,purpose:parsed.purpose,alt:parsed.alt};
   if(metadata.purpose==='original'&&metadata.size>10*1024*1024)throw new ApiError(413,'Ảnh gốc tối đa 10 MB.');
   const claim={...metadata,user,path:`${user}/${randomUUID()}`,expires:Date.now()+15*60*1000};
@@ -33,6 +34,7 @@ export async function completeUpload(input:unknown,user:string){
   if(error||!data)throw new ApiError(400,'Chưa nhận được ảnh hoặc ảnh đã được xử lý. Hãy upload lại.');
   try{
     if(data.size!==claim.size)throw new ApiError(400,'Dung lượng ảnh không khớp phiếu upload.');
-    return await saveUploadedImage(new File([data],claim.filename,{type:claim.mime}),claim.alt,claim.purpose==='post');
+    const file=new File([data],claim.filename,{type:claim.mime});
+    return claim.purpose==='audio'?await saveUploadedAudio(file):await saveUploadedImage(file,claim.alt,claim.purpose==='post');
   }finally{await client.storage.from(temporaryUploadBucket).remove([claim.path]);}
 }

@@ -5,10 +5,19 @@ Atmospheric, nhiều màu sắc theo yêu cầu người dùng: giữ hero cũ, 
 Nút tối thiểu 44px. Badge có chữ. Ô nhập có focus ring. Card một lớp. Dòng danh sách có hành động riêng. Dialog native, Escape, nút đóng. Trạng thái rỗng và lỗi có hướng dẫn.
 ## Ảnh
 Khu vực BTC, cố vấn và các ban là một slideshow ảnh toàn khung, đặt giữa màn hình. Dùng 8 ảnh 1536 × 1024 trong public/images/btc, theo thứ tự no1.png rồi 2.png đến 8.png. Không tách chân dung hoặc dựng lại nội dung nhân sự. Không tự chạy; điều khiển bằng nút, bàn phím hoặc vuốt. Liên kết đội ngũ trên trang chọn đúng nhóm ảnh; cấu hình bật/tắt khu vực vẫn quyết định nhóm ảnh được công khai.
-Giữ file gốc, không re-encode. Thẻ và ảnh nhân sự dùng unoptimized, object-contain, không phủ màu. Xem, phóng và tải URL gốc. Không lấy ảnh người khác làm fallback. CMS là nguồn chính, không phục hồi mẫu khi danh sách rỗng.
+Giữ file gốc, không re-encode. Thẻ và ảnh nhân sự dùng unoptimized, object-contain, không phủ màu. Ảnh không mở popup khi chạm; chỉ phản hồi hover/chạm nhẹ. Không lấy ảnh người khác làm fallback. CMS là nguồn chính, không phục hồi mẫu khi danh sách rỗng.
 ## Phạm vi
-Chỉnh tại chỗ trang chủ, quản trị, bài viết, component. Thêm danh sách tin và trình xem ảnh. Giữ backend và cây kỷ niệm. Không xóa file sản xuất.
+Chỉnh tại chỗ trang chủ, quản trị, bài viết, component. Có danh sách tin và ảnh theo tỷ lệ gốc. Giữ backend và cây kỷ niệm. Không xóa file sản xuất.
 
 ## Tương tác điện thoại và âm thanh
-Các CTA công khai dùng icon nét lồng đèn, trăng, thỏ và ngôi sao cùng màu thương hiệu; chỉ giữ dấu điều hướng khi nó biểu thị chức năng thật (trước/sau poster, tăng/giảm zoom). Mobile có nút tối thiểu 44px, bộ lọc ban bằng select, tin tức vuốt ngang và phản hồi khi chạm. Poster vẫn hỗ trợ vuốt; thêm chỉ số, nút chọn slide và hướng dẫn. Ảnh tin tức giữ tỷ lệ tự nhiên, không chèn viền đen.
-Nút âm thanh ghi Bật tiếng / Tắt tiếng, chỉ phát sau thao tác người dùng và dừng khi vào admin hoặc ẩn tab. Mặc định phát giai điệu chuông nguyên bản tạo tại máy, không phụ thuộc link MP3 bên ngoài. Khi CLB chọn bản ghi MP3, đưa vào public/audio/trung-thu.mp3 rồi cập nhật soundtrackUrl trong src/frontend/lib/festival-sound.ts. Không tự lấy nhạc có bản quyền từ nguồn khác.
+Các CTA công khai chỉ dùng chữ. Mobile có nút tối thiểu 44px, bộ lọc ban bằng select, tin tức vuốt ngang và phản hồi nhẹ khi chạm ảnh. Poster hỗ trợ vuốt; chú thích/chấm chọn ẩn trên điện thoại. Ảnh tin tức giữ tỷ lệ tự nhiên, không chèn viền đen.
+Nút âm thanh ghi Bật tiếng / Tắt tiếng, chỉ phát sau thao tác người dùng và dừng khi vào admin hoặc ẩn tab. Mặc định dùng giai điệu chuông nguyên bản; thay một MP3 tại /admin/website/brand. MP3 luôn được phát lặp.
+
+
+## Mobile và âm thanh
+- Nút và liên kết công khai dùng chữ, không có icon hoặc mũi tên trang trí. Nút chuyển poster vẫn giữ để thao tác trên máy tính.
+- Dưới 768 px: ẩn chú thích/chấm chọn poster và danh sách “Lời nhắn của chúng ta”. Giữ thao tác vuốt ảnh và đọc lời nhắn trực tiếp trên cây.
+- Tên chương trình ở masthead dùng token vàng `--site-accent`.
+- Thay nhạc tại `/admin/website/brand` → Nhạc nền → tải một MP3 → Lưu thay đổi. Chỉ một bài được chọn, giữ nguyên chất lượng, phát lặp khi khách chạm “Bật tiếng”.
+- Tệp MP3 upload trực tiếp qua bucket staging riêng tư, kiểm tra MPEG frames và lưu ở `gallery/music/`. Cấu hình bài được chọn nằm trong `site_settings.content.musicTrack`, không cần thay schema của thư viện ảnh. Các bản upload trước vẫn lưu trong Storage, giúp giữ an toàn khi đang đổi bài.
+- Chạy `node scripts/admin/enable-music.cjs` khi cấu hình Supabase mới để thêm MIME `audio/mpeg` vào hai bucket, giữ nguyên quyền truy cập và giới hạn dung lượng.

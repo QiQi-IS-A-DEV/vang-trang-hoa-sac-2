@@ -1,6 +1,6 @@
 // An original pentatonic chime loop. No external stream or copyrighted recording.
-// Set this to /audio/trung-thu.mp3 after adding the club's chosen recording.
-export const soundtrackUrl: string | null = null;
+// Fallback when no MP3 is selected in /admin/website/brand.
+
 
 export function createFestivalChimes() {
   const context = new AudioContext();

@@ -3,7 +3,6 @@
 import { useEffect, useState } from "react";
 import Link from "next/link";
 import Image from "next/image";
-import { FestivalIcon } from '../ui/festival-icon';
 
 type Post = {
   id: string;
@@ -133,7 +132,7 @@ export function PostGallery() {
                 <div className="mt-4 pt-3 border-t border-white/5 flex items-center justify-between">
                   <span className="post-read-link text-sm font-bold text-amber-300 inline-flex items-center gap-2">
                     <span>Đọc bài viết</span>
-                    <FestivalIcon name="lantern" />
+
                   </span>
                 </div>
               </div>
@@ -142,7 +141,7 @@ export function PostGallery() {
         </div>
       )}
 
-      {!loading && items.length > 1 && <p className="touch-hint post-swipe-hint"><FestivalIcon name="star" /> Vuốt ngang để xem thêm câu chuyện</p>}
+      {!loading && items.length > 1 && <p className="touch-hint post-swipe-hint"> Vuốt ngang để xem thêm câu chuyện</p>}
 
       {!loading && !items.length && !error && (
         <p className="py-12 text-center text-sm text-purple-200">

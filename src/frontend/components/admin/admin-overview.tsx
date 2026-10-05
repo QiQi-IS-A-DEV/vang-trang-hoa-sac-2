@@ -47,6 +47,6 @@ export function AdminOverview({ load, navigate }: {load: (resource: string) => P
         <div className="admin-department-summary">{loading?<p>Đang tải các ban…</p>:(data.departments??[]).filter(d=>cards.some(c=>c.department_id===d.id)).map(d=><div key={String(d.id)}><span>{String(d.name)}</span><strong>{cards.filter(c=>c.department_id===d.id).length}</strong></div>)}</div><button className="admin-primary" onClick={()=>navigate("cards")}><IconStreamUpload size={18}/>Quản lý thẻ</button>
       </section>
     </div>
-    <section className="admin-panel admin-quick-links"><div><IconDashboard size={24}/><h2>Chăm chút trang công khai</h2><p>Cập nhật lời giới thiệu, các khu vực nội dung và hình ảnh chương trình.</p></div><button className="admin-secondary" onClick={()=>navigate("landing-sections")}>Quản lý trang chủ ↗</button><button className="admin-secondary" onClick={()=>navigate("settings")}>Logo & ảnh nền ↗</button></section>
+    <section className="admin-panel admin-quick-links"><div><IconDashboard size={24}/><h2>Chăm chút trang công khai</h2><p>Cập nhật lời giới thiệu, các khu vực nội dung và hình ảnh chương trình.</p></div><button className="admin-secondary" onClick={()=>navigate("landing-sections")}>Quản lý trang chủ ↗</button><button className="admin-secondary" onClick={()=>navigate("settings")}>Nhận diện & âm thanh ↗</button></section>
   </section>;
 }

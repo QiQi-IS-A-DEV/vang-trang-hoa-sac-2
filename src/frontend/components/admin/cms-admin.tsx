@@ -20,7 +20,7 @@ type Field = {key:string;label:string;type?:'boolean'|'number'|'text'|'textarea'
 const definitions:Record<string,{label:string;fields:Field[]}> = {
   overview:{label:'Tổng quan',fields:[]},
   website:{label:'Quản lý trang chủ',fields:[]},
-  'website-brand':{label:'Logo & ảnh nền',fields:[]},
+  'website-brand':{label:'Nhận diện & âm thanh',fields:[]},
   'website-memories':{label:'Cây kỷ niệm',fields:[]},
   cards:{label:'Tình nguyện viên chương trình',fields:[]},
   settings:{label:'Cài đặt nội dung',fields:[

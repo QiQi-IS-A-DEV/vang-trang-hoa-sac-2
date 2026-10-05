@@ -118,3 +118,5 @@ npm run check:uploads
 - [Tài nguyên cây](docs/TREE-ART.md), [tham chiếu](docs/REFERENCES.md)
 
 Chỉ gửi CLB URL sau khi Vercel báo Ready và đã kiểm tra trên URL thực tế. Gửi tài khoản admin qua kênh riêng; tài liệu không chứa mật khẩu.
+
+Nhạc nền: mở `/admin/website/brand` → **Nhạc nền**, tải một bài MP3 (tối đa 50 MB) rồi **Lưu thay đổi**. Website tự phát lặp sau khi khách bấm **Bật tiếng**. Khi tạo Supabase mới, chạy `node scripts/admin/enable-music.cjs` sau các migration để bật upload MP3.

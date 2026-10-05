@@ -1,7 +1,6 @@
 "use client";
 
 import Image from "next/image";
-import { FestivalIcon } from '@/frontend/components/ui/festival-icon';
 import Link from "next/link";
 import { MessageBoard } from "@/frontend/components/memory-tree/message-board";
 import { useSiteSettings } from "@/frontend/lib/hooks/use-site-settings";
@@ -19,9 +18,9 @@ export default function MemoriesPage() {
         <nav className="memory-masthead flex items-center justify-between gap-4">
           <Link href="/" className="flex items-center gap-3 text-sm font-semibold text-white">
             <Image src={settings.logoUrl||'/branding/Logo_VTHS.png'} alt="" width={48} height={48} unoptimized className="h-11 w-11 shrink-0 rounded-full bg-white object-contain" />
-            <span>{settings.heroTitle}</span>
+            <span className="festival-brand-name">{settings.heroTitle}</span>
           </Link>
-          <Link href="/" className="rounded-full border border-white/30 px-4 py-2 text-sm text-amber-100 hover:bg-white/10"><FestivalIcon name="moon" /> Trang chủ</Link>
+          <Link href="/" className="rounded-full border border-white/30 px-4 py-2 text-sm text-amber-100 hover:bg-white/10"> Trang chủ</Link>
         </nav>
         {settings.memoriesIntroVisible!==false&&<header className="mx-auto mt-10 max-w-2xl text-center">
           <p className="text-xs uppercase tracking-[0.3em] text-amber-100">
@@ -36,7 +35,7 @@ export default function MemoriesPage() {
         </header>}
         {settings.memoriesGuideVisible!==false&&<section aria-labelledby="memory-guide-heading" className="memory-landing-guide">
           <div><h2 id="memory-guide-heading">{settings.memoriesGuideTitle}</h2><p>{settings.memoriesGuideDescription}</p></div>
-          <nav aria-label="Khám phá cây kỷ niệm"><a href="#leave-message">Gửi lời nhắn</a><a href="#messages-heading">Đọc lời nhắn</a></nav>
+          <nav aria-label="Khám phá cây kỷ niệm"><a href="#leave-message">Gửi lời nhắn</a><a href="#messages-heading" className="memory-desktop-link">Đọc lời nhắn</a><a href="#tree-heading" className="memory-mobile-link">Đọc trên cây</a></nav>
         </section>}
         <MessageBoard allowSubmissions={settings.allowSubmissions} />
         {settings.memoriesFooterVisible!==false&&settings.memoriesFooterText&&<footer className="memory-landing-footer"><p>{settings.memoriesFooterText}</p><Link href="/">Về trang chủ</Link></footer>}

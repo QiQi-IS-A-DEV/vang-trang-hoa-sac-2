@@ -4,6 +4,32 @@ import { ApiError, dbError } from './http';
 import { storageAdmin } from './storage';
 import { compressPostImage } from './post-image';
 
+export async function saveUploadedAudio(file:File){
+    const bytes=Buffer.from(await file.arrayBuffer());
+    let offset=0;
+    if(bytes.toString('ascii',0,3)==='ID3'){
+      if(bytes.length<10||bytes.subarray(6,10).some(value=>value>127))throw new ApiError(415,'Tệp MP3 không đọc được.');
+      offset=10+((bytes[6]<<21)|(bytes[7]<<14)|(bytes[8]<<7)|bytes[9])+((bytes[5]&16)?10:0);
+    }
+    // Verify actual MPEG Layer III frames, including the next frame boundary.
+    function frameLength(at:number){
+      if(at+4>bytes.length||bytes[at]!==255||(bytes[at+1]&224)!==224||(bytes[at+1]&6)!==2)return 0;
+      const version=(bytes[at+1]>>3)&3,index=bytes[at+2]>>4,rate=(bytes[at+2]>>2)&3;
+      if(version===1||index===0||index===15||rate===3)return 0;
+      const bitrate=(version===3?[0,32,40,48,56,64,80,96,112,128,160,192,224,256,320]:[0,8,16,24,32,40,48,56,64,80,96,112,128,144,160])[index]*1000;
+      const sampleRate=[44100,48000,32000][rate]/(version===3?1:version===2?2:4);
+      return Math.floor((version===3?144:72)*bitrate/sampleRate)+((bytes[at+2]>>1)&1);
+    }
+    const length=frameLength(offset),next=frameLength(offset+length);
+    if(file.type!=='audio/mpeg'||!length||!next||offset+length+next>bytes.length)throw new ApiError(415,'Chọn một tệp MP3 hợp lệ; đổi đuôi tệp không chuyển đổi được định dạng.');
+    if(bytes.length>50*1024*1024)throw new ApiError(413,'Nhạc nền tối đa 50 MB.');
+    const client=storageAdmin(),path=`music/${randomUUID()}.mp3`;
+    const {error:uploadError}=await client.storage.from('gallery').upload(path,bytes,{contentType:'audio/mpeg',upsert:false});
+    if(uploadError)throw new ApiError(503,'Không thể lưu nhạc nền. Hãy thử lại.');
+    const url=client.storage.from('gallery').getPublicUrl(path).data.publicUrl;
+    return {success:true,url,asset:{id:randomUUID(),storage_path:path,url,filename:file.name.slice(0,200),mime_type:'audio/mpeg',size_bytes:bytes.length}};
+}
+
 export async function saveUploadedImage(file:File,alt:string,article:boolean){
     const extensions:Record<string,string>={'image/jpeg':'jpg','image/png':'png','image/webp':'webp'};
     if(!extensions[file.type]) throw new ApiError(415,'Chỉ hỗ trợ JPEG, PNG và WebP.');

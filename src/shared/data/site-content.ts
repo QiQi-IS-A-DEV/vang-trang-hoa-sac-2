@@ -1,6 +1,7 @@
 export interface SiteContentSettings {
   logoUrl?: string;
   backgroundUrl?: string;
+  musicUrl?: string;
   primaryButton?: string;
   secondaryButton?: string;
   // Trang Chủ

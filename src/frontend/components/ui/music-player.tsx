@@ -2,11 +2,13 @@
 
 import { useEffect, useRef, useState } from 'react';
 import { usePathname } from 'next/navigation';
-import { createFestivalChimes, soundtrackUrl } from '@/frontend/lib/festival-sound';
+import { createFestivalChimes } from '@/frontend/lib/festival-sound';
+import { useSiteSettings } from '@/frontend/lib/hooks/use-site-settings';
 import { FestivalIcon } from './festival-icon';
 
 export function MusicPlayer() {
   const pathname = usePathname();
+  const { musicUrl: soundtrackUrl } = useSiteSettings();
   const isAdmin = pathname?.startsWith('/admin');
   const [playing, setPlaying] = useState(false);
   const [busy, setBusy] = useState(false);
@@ -28,6 +30,14 @@ export function MusicPlayer() {
     document.addEventListener('visibilitychange', visibility);
     return () => document.removeEventListener('visibilitychange', visibility);
   }, [isAdmin]);
+
+  useEffect(() => {
+    operation.current++;
+    audio.current?.pause(); audio.current = null;
+    if (sound.current) void sound.current.pause();
+    void Promise.resolve().then(() => { setPlaying(false); setBusy(false); });
+    // Track replacement pauses playback until the next explicit tap.
+  }, [soundtrackUrl]);
 
   useEffect(() => () => {
     operation.current++;

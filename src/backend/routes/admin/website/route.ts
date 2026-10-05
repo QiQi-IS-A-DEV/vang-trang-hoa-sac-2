@@ -4,6 +4,7 @@ import { requireAdmin } from '@/backend/cms/auth';
 import { ApiError, body, dbError, failure, json } from '@/backend/cms/http';
 import { schemas, settingSchema, uuid } from '@/shared/validation/cms';
 import { defaultSiteContent } from '@/shared/data/site-content';
+import { validateMusicAsset } from '@/backend/cms/music';
 
 const schema=z.object({settings:settingSchema.optional(),sections:z.array(schemas['landing-sections'].omit({key:true}).partial().extend({id:uuid}).strict()).max(7).optional()}).strict().refine(p=>Boolean(p.settings&&Object.keys(p.settings).length)||Boolean(p.sections?.length),'Thiếu nội dung cần lưu.');
 export async function GET(request:Request){
@@ -20,6 +21,7 @@ export async function GET(request:Request){
 export async function PUT(request:Request){
   try{
     const {client}=await requireAdmin(request),input=schema.parse(await body(request));
+    if(input.settings)await validateMusicAsset(input.settings);
     const {error}=await client.rpc('save_website',{payload:input});
     if(error?.code==='P0002')throw new ApiError(404,'Một khu vực đã thay đổi. Hãy tải lại cấu hình trước khi lưu.');
     dbError(error);return json({success:true});
