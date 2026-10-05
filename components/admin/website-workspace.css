@@ -1,0 +1,85 @@
+/* Hallmark · macrostructure: Index-First · nav: existing side-rail · footer: save bar
+ * genre: modern-minimal · tone: utilitarian · theme: existing purple/gold · P5 H5 E4 S5 R5 V4 */
+.cms-shell .website-workspace { max-width: 1240px; margin: auto; min-width: 0; }
+html:has(.website-workspace),body:has(.website-workspace) { overflow-x: clip; }
+.cms-shell .website-workspace button:disabled { opacity: .5; cursor: not-allowed; }
+.cms-shell .website-workspace button:active:not(:disabled) { transform: translateY(1px); }
+.cms-shell .website-workspace h1,.cms-shell .website-workspace h2,.cms-shell .website-workspace h3 { font-style: normal; overflow-wrap: anywhere; min-width: 0; }
+.cms-shell .website-back { display: inline-block; margin-bottom: 20px; }
+.cms-shell .website-fields { border: 0; padding: 0; margin: 0; min-width: 0; }
+.cms-shell .website-list-head,.cms-shell .website-group-heading { display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 16px; margin-bottom: 20px; }
+.cms-shell .website-list-head h2,.cms-shell .website-form-panel h2 { font-size: 18px; font-weight: 700; }
+.cms-shell .website-list-head span,.cms-shell .website-hint { color: var(--admin-muted); font-size: 14px; line-height: 1.6; }
+.cms-shell .website-index { border-top: 1px solid var(--admin-line); }
+.cms-shell .website-index-row { display: grid; grid-template-columns: 32px minmax(0,1fr) auto; gap: 24px; align-items: center; padding: 24px 0; border-bottom: 1px solid var(--admin-line); }
+.cms-shell .website-index-number { color: var(--admin-muted); font-size: 13px; font-variant-numeric: tabular-nums; }
+.cms-shell .website-index-copy h3 { font-size: 18px; font-weight: 700; color: var(--admin-ink); }
+.cms-shell .website-index-copy a:hover,.cms-shell .website-related a:hover { color: var(--admin-accent); }
+.cms-shell .website-index-copy p { margin-top: 8px; font-size: 14px; line-height: 1.6; color: var(--admin-muted); max-width: 660px; }
+.cms-shell .website-index-controls { display: flex; flex-wrap: wrap; gap: 16px; align-items: center; }
+.cms-shell .website-edit-link { min-height: 44px; padding: 10px 14px; font-size: 14px; }
+.cms-shell .website-secondary-index b { color: var(--admin-accent); font-size: 14px; }
+.cms-shell .website-index-controls label,.cms-shell .website-toggle { display: flex; align-items: center; gap: 10px; font-size: 14px; min-height: 44px; white-space: nowrap; }
+.cms-shell .website-index-controls button { width: 44px; height: 44px; border: 1px solid var(--admin-line); color: var(--admin-ink); background: var(--admin-surface); cursor: pointer; }
+.cms-shell .website-index-controls button:hover { background: var(--admin-surface-hover); }
+.cms-shell .website-index-controls button:disabled { opacity: .35; cursor: default; }
+.cms-shell .website-secondary-index { display: grid; grid-template-columns: repeat(2,minmax(0,1fr)); margin-top: 32px; gap: 24px; }
+.cms-shell .website-secondary-index a { border-left: 2px solid var(--admin-line-bright); padding: 12px 20px; display: grid; gap: 8px; }
+.cms-shell .website-secondary-index span { color: var(--admin-muted); font-size: 14px; }
+.cms-shell .website-editor-grid { display: grid; grid-template-columns: minmax(0,1fr) 300px; gap: 28px; align-items: start; }
+.cms-shell .website-editor-main { display: grid; gap: 24px; min-width: 0; }
+.cms-shell .website-form-panel { display: grid; gap: 20px; padding: 28px; }
+.cms-shell .website-field { display: grid; gap: 9px; font-size: 14px; font-weight: 600; min-width: 0; }
+.cms-shell .website-field input,.cms-shell .website-field textarea,.cms-shell .website-field select { width: 100%; min-width: 0; font-weight: 400; }
+.cms-shell .website-field textarea { resize: vertical; }
+.cms-shell .website-field-help { color: var(--admin-muted); font-size: 13px; line-height: 1.65; font-weight: 400; overflow-wrap: anywhere; }
+.cms-shell .website-field-help p + p { margin-top: 4px; }
+.cms-shell .website-field-help > span { display: block; margin-top: 4px; font-size: 12px; font-variant-numeric: tabular-nums; }
+.cms-shell .website-input-guide { margin-bottom: 24px; }
+.cms-shell .website-form-pair { display: grid; grid-template-columns: repeat(2,minmax(0,1fr)); gap: 20px; }
+.cms-shell .website-editor-aside { position: sticky; top: 90px; display: grid; gap: 24px; }
+.cms-shell .website-preview { padding: 24px; border: 1px solid var(--admin-line); border-radius: 12px; background: var(--admin-surface); }
+.cms-shell .website-preview h2 { margin: 16px 0; font-size: 22px; font-weight: 700; }
+.cms-shell .website-preview p { line-height: 1.7; white-space: pre-wrap; overflow-wrap: anywhere; }
+.cms-shell .website-preview small { display: block; color: var(--admin-muted); margin-top: 24px; line-height: 1.6; }
+.cms-shell .website-preview-stats { display: grid; grid-template-columns: repeat(2,minmax(0,1fr)); gap: 16px; margin-top: 24px; }
+.cms-shell .website-preview-stats strong,.cms-shell .website-preview-stats span { display: block; overflow-wrap: anywhere; }
+.cms-shell .website-preview-stats strong { font-size: 24px; color: var(--admin-accent); }
+.cms-shell .website-preview-stats span { font-size: 12px; }
+.cms-shell .website-related { padding: 20px 0; display: grid; gap: 12px; }
+.cms-shell .website-related h2,.cms-shell .website-related h3 { font-size: 16px; font-weight: 700; }
+.cms-shell .website-related p { color: var(--admin-muted); font-size: 14px; line-height: 1.6; }
+.cms-shell .website-media { display: grid; gap: 16px; min-width: 0; }
+.cms-shell .website-media h3 { font-weight: 700; }
+.cms-shell .website-media-image { display: block; width: 100%; max-height: 280px; height: auto; object-fit: contain; }
+.cms-shell .website-media small { color: var(--admin-muted); line-height: 1.6; }
+.cms-shell .website-upload { font-size: 14px; display: grid; gap: 10px; }
+.cms-shell .website-upload input { width: 100%; min-width: 0; }
+.cms-shell .website-posters { display: grid; grid-template-columns: repeat(2,minmax(0,1fr)); gap: 16px; }
+.cms-shell .website-posters img { width: 100%; height: auto; object-fit: contain; }
+.cms-shell .website-posters figcaption { color: var(--admin-muted); font-size: 12px; margin-top: 8px; }
+.cms-shell .website-repeater { display: grid; gap: 16px; padding-top: 24px; border-top: 1px solid var(--admin-line); }
+.cms-shell .website-journey { display: block; }
+.cms-shell .website-journey summary { cursor: pointer; font-size: 15px; font-weight: 700; padding: 12px 0; line-height: 1.6; overflow-wrap: anywhere; }
+.cms-shell .website-journey summary:focus-visible { outline: 2px solid var(--admin-accent); outline-offset: 4px; }
+.cms-shell .website-journey-fields { display: grid; gap: 16px; margin-top: 20px; }
+.cms-shell .website-inline-actions { display: flex; gap: 10px; align-items: center; }
+.cms-shell .website-save-bar { position: sticky; bottom: 0; display: flex; justify-content: space-between; align-items: center; gap: 16px; padding: 20px 0; margin-top: 28px; background: var(--admin-bg-base); border-top: 1px solid var(--admin-line); z-index: 5; }
+.cms-shell .website-save-bar p { color: var(--admin-muted); font-size: 13px; }
+.cms-shell .website-workspace button,.cms-shell .website-workspace .admin-secondary { white-space: nowrap; }
+.cms-shell .website-success { color: var(--admin-green); border-left: 2px solid var(--admin-green); padding: 12px 16px; margin-bottom: 24px; }
+.cms-shell .website-workspace a:focus-visible,.cms-shell .website-workspace button:focus-visible { outline: 2px solid var(--admin-accent); outline-offset: 4px; }
+@media(max-width:1100px) { .cms-shell .website-editor-grid { grid-template-columns: minmax(0,1fr); } .cms-shell .website-editor-aside { position: static; } }
+@media(max-width:768px) {
+  .cms-shell .website-workspace .admin-page-heading { flex-direction: column; align-items: flex-start; gap: 20px; }
+  .cms-shell .website-index-row { grid-template-columns: 24px minmax(0,1fr); gap: 12px; padding: 24px 0; }
+  .cms-shell .website-index-controls { grid-column: 2; justify-content: space-between; gap: 12px; }
+  .cms-shell .website-form-pair,.cms-shell .website-secondary-index { grid-template-columns: minmax(0,1fr); }
+  .cms-shell .website-form-panel { padding: 20px; }
+  .cms-shell .website-list-head,.cms-shell .website-group-heading { flex-direction: column; align-items: flex-start; }
+  .cms-shell .website-save-bar { gap: 10px; }
+  .cms-shell .website-save-bar .admin-primary { padding: 10px 14px; }
+  .cms-shell .website-index-copy h3 { font-size: 16px; }
+}
+@media(max-width:375px) { .cms-shell .website-posters { grid-template-columns: minmax(0,1fr); } .cms-shell .website-form-panel { padding: 16px; } }
+@media(max-width:350px) { .cms-shell:has(.website-workspace) .admin-breadcrumb > span { display: none; } .cms-shell:has(.website-workspace) .admin-breadcrumb strong { white-space: nowrap; } }

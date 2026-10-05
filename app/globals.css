@@ -1,0 +1,237 @@
+@import "tailwindcss";
+
+:root {
+  color-scheme: dark;
+  --festival-purple: #58217c;
+  --festival-pink: #ec91c0;
+  --festival-gold: #ffb000;
+  --festival-title-gradient: linear-gradient(180deg, #ffe853 0%, #ffcf00 50%, #ffb000 100%);
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  margin: 0;
+  background: #321547;
+  color: #fff7e6;
+  font-family: Arial, Helvetica, sans-serif;
+}
+
+::selection {
+  background: #ffe059;
+  color: #58217c;
+}
+
+/* Màu chữ chuẩn Vầng Trăng Hòa Sắc 2: Vàng rực rỡ đổ bóng tím mận #63285d đồng điệu background */
+.festival-title {
+  font-family: var(--font-vietnam), Arial, Helvetica, sans-serif;
+  background: var(--festival-title-gradient);
+  background-clip: text;
+  -webkit-background-clip: text;
+  color: transparent;
+  filter: drop-shadow(0 4px 0 #63285d);
+  line-height: 1.35;
+  padding-top: 0.15em;
+  padding-bottom: 0.15em;
+  overflow: visible;
+  display: inline-block;
+}
+
+.festival-button {
+  background: var(--festival-title-gradient);
+  transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.festival-button:hover {
+  filter: brightness(1.1);
+  box-shadow: 0 0 25px rgba(255, 176, 0, 0.5);
+  transform: translateY(-1px);
+}
+
+.festival-button:active {
+  transform: translateY(0);
+}
+
+a:focus-visible, button:focus-visible {
+  outline: 3px solid #ffe059;
+  outline-offset: 3px;
+}
+
+/* Glassmorphism & stage poster effects */
+.stage-poster-card {
+  position: relative;
+  transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.stage-poster-card:hover {
+  box-shadow: 0 20px 50px rgba(18, 4, 30, 0.9), 0 0 30px rgba(251, 191, 36, 0.25);
+}
+
+/* Hologram shine overlay on hover */
+.hologram-shine {
+  position: relative;
+  overflow: hidden;
+}
+
+.hologram-shine::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 60%;
+  height: 100%;
+  background: linear-gradient(
+    90deg,
+    transparent,
+    rgba(255, 255, 255, 0.15),
+    rgba(254, 240, 138, 0.25),
+    transparent
+  );
+  transform: skewX(-20deg);
+  transition: left 0.75s ease-in-out;
+  pointer-events: none;
+  z-index: 10;
+}
+
+.hologram-shine:hover::before {
+  left: 140%;
+}
+
+/* Ambient glow behind elements */
+.moon-ambient-glow {
+  background: radial-gradient(circle, rgba(253, 224, 71, 0.18) 0%, rgba(217, 70, 239, 0.12) 40%, transparent 70%);
+}
+
+/* Star twinkle keyframes */
+@keyframes star-twinkle {
+  0%, 100% { opacity: 0.3; transform: scale(0.9); }
+  50% { opacity: 1; transform: scale(1.1); filter: drop-shadow(0 0 6px #fde047); }
+}
+
+.star-twinkle {
+  animation: star-twinkle 3s ease-in-out infinite alternate;
+}
+
+/* Tree & Memory Controls */
+.tree-control {
+  border: 1px solid #fbcfe866;
+  border-radius: 999px;
+  padding: 0.4rem 0.85rem;
+  color: #fef3c7;
+  background: #351846;
+  transition: background 0.2s;
+}
+.tree-control:hover {
+  background: #58217c;
+}
+
+.wishing-tree {
+  background: linear-gradient(180deg, #31124438, #4c1c5e0d 45%, #27113680);
+  box-shadow: inset 0 1px 0 #ffffff14, 0 30px 80px #24103530;
+}
+
+.tree-ornament {
+  width: 4.5%;
+  min-width: 25px;
+  aspect-ratio: 44 / 68;
+  filter: drop-shadow(0 3px 5px #30153677);
+  transition: filter 0.2s, transform 0.2s;
+}
+.tree-ornament:hover {
+  filter: drop-shadow(0 0 12px #ffe3a7);
+  transform: scale(1.08);
+}
+
+.memory-dialog {
+  background: linear-gradient(145deg, #fff8e9, #f9e3dc);
+}
+
+#leave-message {
+  scroll-margin-top: 2rem;
+}
+
+.tree-breathing {
+  animation: tree-breathing 8s ease-in-out infinite alternate;
+}
+
+.tree-firefly {
+  animation: tree-firefly 4s ease-in-out infinite alternate;
+}
+
+@keyframes tree-breathing {
+  from { transform: rotate(-0.45deg); }
+  to { transform: rotate(0.45deg); }
+}
+
+@keyframes tree-firefly {
+  from { opacity: 0.15; }
+  to { opacity: 0.9; }
+}
+
+.tree-canvas {
+  max-height: none;
+  max-width: 900px;
+  margin-inline: auto;
+}
+
+.banyan-art {
+  left: 3%;
+  top: 4%;
+  width: 94%;
+  height: auto;
+  filter: drop-shadow(0 14px 18px #1a102c55);
+}
+
+.tree-ground-glow {
+  position: absolute;
+  width: 65%;
+  height: 12%;
+  left: 17.5%;
+  bottom: 3%;
+  background: radial-gradient(ellipse, #f2c77644, transparent 70%);
+}
+
+.ornament-sway {
+  animation: ornament-sway 5s ease-in-out infinite alternate;
+}
+
+@keyframes ornament-sway {
+  from { rotate: -4deg; }
+  to { rotate: 4deg; }
+}
+
+.wind-active .banyan-crown {
+  animation: canopy-wind 6s ease-in-out infinite alternate;
+}
+
+.wind-active .banyan-root, .wind-active .banyan-root-sway {
+  animation: root-wind 7s ease-in-out infinite alternate;
+  transform-origin: top center;
+}
+
+@keyframes canopy-wind {
+  from { transform: rotate(-0.8deg) skewX(-0.4deg); }
+  to { transform: rotate(0.9deg) skewX(0.5deg); }
+}
+
+@keyframes root-wind {
+  from { transform: rotate(-1.2deg); }
+  to { transform: rotate(1.4deg); }
+}
+
+@media (max-width: 640px) {
+  .tree-control { padding: 0.3rem 0.65rem; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+  .tree-breathing, .tree-firefly, .ornament-sway, .star-twinkle, .hologram-shine::before {
+    animation: none !important;
+    transition: none !important;
+  }
+  .wind-active .banyan-crown, .wind-active .banyan-root, .wind-active .banyan-root-sway {
+    animation: none !important;
+  }
+}
