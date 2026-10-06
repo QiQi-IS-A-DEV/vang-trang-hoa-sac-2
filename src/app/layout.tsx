@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { MusicPlayer } from "@/frontend/components/ui/music-player";
 import { ScrollToTop } from "@/frontend/components/ui/scroll-to-top";
+import { NavigationDrawer } from "@/frontend/components/ui/navigation-drawer";
 import "@/frontend/styles/globals.css";
 import "@/frontend/styles/site.css";
 import { Be_Vietnam_Pro, Lora } from "next/font/google";
@@ -23,6 +24,7 @@ export default function RootLayout({ children }: Readonly<{ children: React.Reac
     <html lang="vi" className={`${bodyFont.variable} ${headingFont.variable}`}>
       <body>
         {children}
+        <NavigationDrawer />
         <ScrollToTop />
         <MusicPlayer />
       </body>

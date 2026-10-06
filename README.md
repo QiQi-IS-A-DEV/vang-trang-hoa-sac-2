@@ -4,6 +4,12 @@
 
 Website CLB OU Help To Be Helped: giới thiệu chương trình, thẻ tình nguyện viên, tin tức và cây kỷ niệm có lời nhắn realtime.
 
+## Hướng dẫn dành cho BTC
+
+Sổ tay quản trị có hướng dẫn nhanh, ảnh minh họa, thao tác cho từng màn và cách xử lý lỗi:
+[PDF để chia sẻ](docs/user-guide/Huong-dan-quan-tri-VTHS2.pdf) · [Word để chỉnh sửa](docs/user-guide/Huong-dan-quan-tri-VTHS2.docx) · [Markdown](docs/user-guide/HUONG-DAN-QUAN-TRI.md).
+Nội dung gốc nằm trong `docs/user-guide/content.json`; chạy `scripts/docs/build-admin-guide.py` với Python có `python-docx` để tạo lại Word và Markdown. Khi cập nhật, xuất PDF từ Word và kiểm tra ngắt trang, ảnh minh họa trước khi bàn giao.
+
 ## Công nghệ
 
 FE: React 19, TypeScript, Tailwind CSS 4, Next.js App Router. BE: Next.js Route Handlers/Node.js, Zod, Sharp. Dữ liệu: Supabase PostgreSQL, Auth, Storage và Realtime. Hosting: Vercel cho FE + API, Supabase cho dữ liệu và ảnh; một repository, một lần deploy.

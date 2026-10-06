@@ -58,6 +58,7 @@ export function Hero() {
 
         {/* Navigation links */}
         <nav
+          id="festival-main-nav"
           aria-label="Điều hướng chính"
           className="festival-main-nav"
         >
